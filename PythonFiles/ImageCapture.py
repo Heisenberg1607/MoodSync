@@ -1,54 +1,45 @@
 import cv2
+import os
 import time
 
-# Open the default camera (usually the laptop's built-in camera)
+# Define the path for the 'Captures' folder
+current_directory = os.path.dirname(os.path.abspath(__file__))
+captures_directory = os.path.join(current_directory, 'Captures')
+
+# Create the 'Captures' folder if it does not exist
+if not os.path.exists(captures_directory):
+    os.makedirs(captures_directory)
+
+# Initialize the webcam
 cap = cv2.VideoCapture(0)
 
-# Set the frame width and height if desired
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-
-# Check if the camera opened successfully
 if not cap.isOpened():
-    print("Error: Could not open camera.")
+    print("Error: Could not open webcam.")
     exit()
 
-# Counter for unique filenames
-image_counter = 0
+image_count = 0
 
-print("Capturing images every second. Press 'q' to stop.")
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        print("Failed to capture image.")
+        break
 
-try:
-    while True:
-        # Capture frame-by-frame
-        ret, frame = cap.read()
+    # Display the captured frame
+    cv2.imshow('Image Capture', frame)
 
-        # If frame is captured successfully
-        if ret:
-            
-            cv2.imshow("Camera", frame)
-            # Create a filename with the current counter
-            filename = f"captured_image_{image_counter}.jpg"
+    # Save the frame as an image in the 'Captures' folder
+    image_filename = os.path.join(captures_directory, f'capture_{image_count}.png')
+    cv2.imwrite(image_filename, frame)
+    print(f"Image saved: {image_filename}")
 
-            # Save the current frame as an image file
-            cv2.imwrite(filename, frame)
-            print(f"Image saved as {filename}")
+    image_count += 1
 
-            # Increase the counter for the next image
-            image_counter += 1
+    # Wait for 4 seconds before capturing the next image
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+    time.sleep(4)  # Pause for 4 seconds
 
-            # Wait for 1 second
-            time.sleep(1)
-        else:
-            print("Error: Could not read frame.")
-            break
-
-        # Check if 'q' is pressed to quit
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            print("Exiting...")
-            break
-
-finally:
-    # Release the camera and close the window
-    cap.release()
-    cv2.destroyAllWindows()
+# Release the webcam and close all windows
+cap.release()
+cv2.destroyAllWindows()
