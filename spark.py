@@ -13,7 +13,7 @@ batch_number = int(sys.argv[1])
 spark = SparkSession.builder.appName("ImageProcessing").getOrCreate()
 
 # Load pre-trained facial expression model
-model = load_model('path_to_emotion_model.h5')  # Replace with your model's path
+model = load_model('/Users/janyajaiswal/Desktop/ADBMS/MoodSync/MoodSync/emotion_model.h5')  # Replace with your model's path
 emotion_labels = ['Angry', 'Happy', 'Neutral', 'Sad', 'Surprised']  # Emotion categories
 
 def process_image(image_path):
