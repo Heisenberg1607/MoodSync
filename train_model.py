@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
 # Load the images.csv file
-data_path = '/Users/janyajaiswal/Desktop/ADBMS/MoodSync/MoodSync/images.csv'  # Update with your file path
+data_path = 'D:\MoodSync\images.csv'  # Update with your file path
 data = pd.read_csv(data_path)
 
 # Map emotion labels to integers (if necessary)

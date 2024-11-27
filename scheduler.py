@@ -7,7 +7,7 @@ batch_number = 1
 while True:
     # Run ImageCapture.py for 1 minute to capture images for the current batch
     print(f"Starting image capture for batch {batch_number}...")
-    subprocess.run(["python3", "/Users/janyajaiswal/Desktop/ADBMS/MoodSync/MoodSync/ImageCapture.py", str(batch_number)])
+    subprocess.run(["python", "D:\MoodSync\ImageCapture.py", str(batch_number)])
     print(f"Image capture for batch {batch_number} completed.")
 
     # Wait for a few seconds to ensure the batch is finalized
@@ -15,7 +15,7 @@ while True:
 
     # Process the captured images using spark.py
     print(f"Processing images for batch {batch_number}...")
-    subprocess.run(["python3", "/Users/janyajaiswal/Desktop/ADBMS/MoodSync/MoodSync/spark.py", str(batch_number)])
+    subprocess.run(["python", "D:\MoodSync\spark.py", str(batch_number)])
     print(f"Processing for batch {batch_number} completed.")
 
     # Move to the next batch
